@@ -1,0 +1,6 @@
+iptables -t nat  -A PREROUTING  -d   172.168.100.7 -p tcp --dport 80  -j  DNAT --to-destination 192.168.100.9
+iptables -t nat  -A POSTROUTING   -d 192.168.100.9 -p tcp --dport 80 -j  SNAT --to-source  172.168.100.7     ##两行蓝色的规则效果一样
+iptables -t nat  -A POSTROUTING   -d 192.168.100.9 -p tcp --dport 80 -j  MASQUERADE
+/etc/sysctl.conf: net.ipv4.ip_forward = 1
+sudo /sbin/iptables -t nat -A POSTROUTING -o enp4s0 -j MASQUERADE
+iptables -t nat  -A POSTROUTING -s 10.160.64.65 -j  SNAT --to-source  10.160.64.101
